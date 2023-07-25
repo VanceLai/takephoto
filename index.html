@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>簡易響應式網頁</title>
+  <style>
+    /* CSS 可以用來設計網頁的樣式 */
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #camera {
+      width: 100%;
+      height: auto;
+    }
+    #textInput {
+      width: 100%;
+      padding: 5px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    #addButton {
+      display: block;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>簡易響應式網頁</h1>
+  
+  <!-- 顯示照片的容器 -->
+  <div id="photoContainer">
+    <img id="camera" src="#" alt="相機畫面">
+  </div>
+  
+  <!-- 拍照按鈕 -->
+  <button id="captureButton">拍照</button>
+  
+  <!-- 輸入要加註的訊息 -->
+  <input type="text" id="textInput" placeholder="輸入訊息...">
+  
+  <!-- 加註按鈕 -->
+  <button id="addButton">加註訊息</button>
+  
+  <script>
+    // 取得拍照按鈕和照片容器
+    const captureButton = document.getElementById('captureButton');
+    const camera = document.getElementById('camera');
+    const photoContainer = document.getElementById('photoContainer');
+    
+    // 當拍照按鈕被點擊時觸發
+    captureButton.onclick = function() {
+      // 使用手機的相機進行拍照
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(function(stream) {
+          camera.srcObject = stream;
+          camera.play();
+        })
+        .catch(function(error) {
+          console.error('無法取得相機畫面:', error);
+        });
+    };
+    
+    // 取得加註按鈕和輸入框
+    const addButton = document.getElementById('addButton');
+    const textInput = document.getElementById('textInput');
+    
+    // 當加註按鈕被點擊時觸發
+    addButton.onclick = function() {
+      // 取得輸入框的值
+      const message = textInput.value;
+      
+      // 在照片容器中建立一個新的元素來顯示訊息
+      const messageElement = document.createElement('p');
+      messageElement.innerText = message;
+      photoContainer.appendChild(messageElement);
+    };
+  </script>
+</body>
+</html>
